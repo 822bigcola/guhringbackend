@@ -6,8 +6,16 @@ const News = mongoose.model("News", NewsSchema);
 
 router.post("/", async (req, res) => {
   try {
-    const { title, content, filepath, bodycontent, path, hashtag, pathUrl } =
-      req.body;
+    const {
+      title,
+      content,
+      filepath,
+      bodycontent,
+      path,
+      hashtag,
+      pathUrl,
+      key,
+    } = req.body;
 
     const news = new News({
       title,
@@ -17,6 +25,7 @@ router.post("/", async (req, res) => {
       path,
       hashtag,
       pathUrl,
+      key,
     });
     await news.save();
 
