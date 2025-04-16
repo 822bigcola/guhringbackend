@@ -9,6 +9,6 @@ const NewsSchema = new mongoose.Schema({
   path: String,
   hashtag: String,
   pathUrl: String,
-  key: Number,
+  _id: Number,
 });
 module.exports = NewsSchema;
