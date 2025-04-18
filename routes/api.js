@@ -6,7 +6,8 @@ const News = mongoose.model("News", NewsSchema);
 
 routerAPI.get("/", async (req, res) => {
   try {
-    const news = await News.find().sort({ createAt: -1 });
+    const news = await News.find();
+    news = news.reverse();
     console.log(news);
     res.status(200).json(news);
   } catch (err) {
