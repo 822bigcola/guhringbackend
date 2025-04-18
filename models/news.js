@@ -10,5 +10,6 @@ const NewsSchema = new mongoose.Schema({
   hashtag: String,
   pathUrl: String,
   _id: Number,
+  createdAt: { type: Date, default: Date.now },
 });
 module.exports = NewsSchema;

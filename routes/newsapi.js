@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
       hashtag,
       pathUrl,
       _id,
+      createdAt,
     } = req.body;
 
     const news = new News({
@@ -26,6 +27,7 @@ router.post("/", async (req, res) => {
       hashtag,
       pathUrl,
       _id,
+      createdAt,
     });
     await news.save();
 
