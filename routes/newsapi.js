@@ -1,10 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const NewsSchema = require("../models/news");
+const authenticateJWT = require("../middleware/authenticateJWT");
+const { News } = require("../models/news");
 const router = express.Router();
-const News = mongoose.model("News", NewsSchema);
 
-router.post("/", async (req, res) => {
+router.post("/", authenticateJWT, async (req, res) => {
   try {
     const {
       title,
@@ -29,11 +28,11 @@ router.post("/", async (req, res) => {
     });
     await news.save();
 
-    res.status(201).json({ message: "User created successfully", news: news });
+    res.status(201).json({ message: "News created successfully", news: news });
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Failed to create user", details: error.message });
+      .json({ error: "Failed to create news", details: error.message });
   }
 });
 module.exports = router;

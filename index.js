@@ -3,6 +3,8 @@ const connectDB = require("./db");
 const apiRouter = require("./routes/api");
 const homepage = require("./routes/homepage");
 const apinews = require("./routes/newsapi");
+const apiCreateUser = require("./routes/register");
+const apiLogin = require("./routes/login");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -26,6 +28,9 @@ app.use("/", webAPI);
 app.use("/v1/api", apiRouter);
 
 app.use("/news", apinews);
+
+app.use("/register", apiCreateUser);
+app.use("/login", apiLogin);
 
 // Khởi động server
 app.listen(PORT, () => {
