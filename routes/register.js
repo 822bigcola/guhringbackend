@@ -1,14 +1,14 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const { User } = require("../models/news");
+const { User } = require("../models/Schema");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 require("dotenv").config();
 
 router.post("/", async (req, res) => {
   try {
-    const { username, password } = req.body;
-
+    let { username, password } = req.body;
+    username = username.toLowerCase();
     const exisUser = await User.findOne({ username });
     if (exisUser) {
       return res.status(400).json({ message: "Username already exists" });

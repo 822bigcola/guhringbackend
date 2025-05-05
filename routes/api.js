@@ -1,7 +1,7 @@
 const express = require("express");
 const routerAPI = express.Router();
 const mongoose = require("mongoose");
-const { News } = require("../models/news");
+const { News } = require("../models/Schema");
 
 routerAPI.get("/", async (req, res) => {
   try {

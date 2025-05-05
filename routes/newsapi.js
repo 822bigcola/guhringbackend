@@ -1,6 +1,6 @@
 const express = require("express");
 const authenticateJWT = require("../middleware/authenticateJWT");
-const { News } = require("../models/news");
+const { News } = require("../models/Schema");
 const router = express.Router();
 
 router.post("/", authenticateJWT, async (req, res) => {
