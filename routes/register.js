@@ -8,6 +8,11 @@ require("dotenv").config();
 router.post("/", async (req, res) => {
   try {
     let { username, password } = req.body;
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ message: "Username and password are required" });
+    }
     username = username.toLowerCase();
     const exisUser = await User.findOne({ username });
     if (exisUser) {
