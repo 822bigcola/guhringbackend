@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     bcrypt.compare(password, user.password, function (error, result) {
       if (result) {
         const token = jwt.sign(
-          { id: user._id, username: user.username, role: user.role },
+          { id: user._id, username: user.username },
           process.env.JWT_SECRET || process.env.SECRET_KEY,
           { expiresIn: "24h" }
         );
