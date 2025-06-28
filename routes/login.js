@@ -16,11 +16,15 @@ router.post("/", async (req, res) => {
     bcrypt.compare(password, user.password, function (error, result) {
       if (result) {
         const token = jwt.sign(
-          { id: user._id, username: user.username },
+          { id: user._id, username: user.username, role: user.role },
           process.env.JWT_SECRET || process.env.SECRET_KEY,
           { expiresIn: "24h" }
         );
-        res.status(201).json({ message: "Login successfully", token: token });
+        res.status(201).json({
+          message: "Login successfully",
+          token: token,
+          role: role,
+        });
       } else {
         res.status(400).json({ message: "Wrong username or password" });
       }

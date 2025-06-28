@@ -21,6 +21,11 @@ const UserSchema = new mongoose.Schema(
   {
     username: String,
     password: String,
+    role: {
+      type: String,
+      enum: ["admin", "sales", "product", "accounting", "hr", "user"],
+      default: "user",
+    },
   },
   { timestamps: true }
 );

@@ -7,7 +7,7 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   try {
-    let { username, password } = req.body;
+    let { username, password, role } = req.body;
     if (!username || !password) {
       return res
         .status(400)
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({ username, password: hashedPassword });
+    const user = new User({ username, password: hashedPassword, role });
     await user.save();
 
     res.status(201).json({ message: "User created successfully" });
