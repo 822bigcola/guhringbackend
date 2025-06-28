@@ -5,6 +5,7 @@ const homepage = require("./routes/homepage");
 const apinews = require("./routes/newsapi");
 const apiCreateUser = require("./routes/register");
 const apiLogin = require("./routes/login");
+const apiArticle = require("./routes/Article");
 
 require("dotenv").config();
 const cors = require("cors");
@@ -31,6 +32,7 @@ app.use("/news", apinews);
 
 app.use("/register", apiCreateUser);
 app.use("/login", apiLogin);
+app.use("/article", apiArticle);
 
 // Khởi động server
 app.listen(PORT, () => {
