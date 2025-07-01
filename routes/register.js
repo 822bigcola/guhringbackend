@@ -1,34 +1,58 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { User } = require("../models/Schema");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
 require("dotenv").config();
 
 router.post("/", async (req, res) => {
   try {
-    let { username, password, role } = req.body;
-    if (!username || !password) {
-      return res
-        .status(400)
-        .json({ message: "Username and password are required" });
-    }
-    username = username.toLowerCase();
-    const exisUser = await User.findOne({ username });
-    if (exisUser) {
-      return res.status(400).json({ message: "Username already exists" });
+    let users = req.body;
+
+    // Nếu chỉ gửi một user duy nhất (object), thì chuyển thành mảng
+    if (!Array.isArray(users)) {
+      users = [users];
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Received users:", users);
 
-    const user = new User({ username, password: hashedPassword, role });
-    await user.save();
+    if (users.length === 0) {
+      return res.status(400).json({ message: "User list is empty" });
+    }
 
-    res.status(201).json({ message: "User created successfully" });
+    const createdUsers = [];
+    const skippedUsers = [];
+
+    for (let user of users) {
+      let { username, password, role } = user;
+
+      if (!username || !password) {
+        skippedUsers.push({ username, reason: "Missing username or password" });
+        continue;
+      }
+
+      username = username.toLowerCase();
+
+      const existing = await User.findOne({ username });
+      if (existing) {
+        skippedUsers.push({ username, reason: "Username already exists" });
+        continue;
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = new User({ username, password: hashedPassword, role });
+      await newUser.save();
+      createdUsers.push(username);
+    }
+
+    res.status(201).json({
+      message: "User processing completed",
+      created: createdUsers,
+      skipped: skippedUsers,
+    });
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Failed to create news", details: error.message });
+      .json({ error: "Failed to create users", details: error.message });
   }
 });
 
