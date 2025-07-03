@@ -10,7 +10,7 @@ router.post("/", authenticateJWT, async (req, res) => {
 
     console.log("Feedback content:", feedback);
     if (!feedback) {
-      return res.status(400).json({ message: "⚠️ Please enter the feedback" });
+      return res.status(400).json({ message: "⚠️ Please enter feedback" });
     }
 
     const newFeedback = new Feedback({ feedback });
