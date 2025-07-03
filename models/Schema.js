@@ -39,6 +39,13 @@ const ArticleSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const FeedbackSchema = new mongoose.Schema(
+  {
+    feedback: String,
+  },
+  { timestamps: true }
+);
 // Export Models
 const News = mongoose.models.News || mongoose.model("News", NewsSchema);
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
