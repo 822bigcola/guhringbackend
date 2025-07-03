@@ -51,9 +51,12 @@ const News = mongoose.models.News || mongoose.model("News", NewsSchema);
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
 const Article =
   mongoose.models.Article || mongoose.model("Article", ArticleSchema);
+const Feedback =
+  mongoose.models.Feedback || mongoose.model("Feedback", FeedbackSchema);
 
 module.exports = {
   News,
   User,
   Article,
+  Feedback,
 };
