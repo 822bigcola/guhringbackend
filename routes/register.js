@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { User } = require("../models/Schema");
+const sanitizeCustom = require("../utils/sanitizeHtml");
 const router = express.Router();
 require("dotenv").config();
 
@@ -29,6 +30,10 @@ router.post("/", async (req, res) => {
         skippedUsers.push({ username, reason: "Missing username or password" });
         continue;
       }
+
+      // Sanitize username and password
+      username = sanitizeCustom(username.trim());
+      password = sanitizeCustom(password.trim());
 
       username = username.toLowerCase();
 

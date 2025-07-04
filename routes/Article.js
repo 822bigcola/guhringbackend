@@ -1,15 +1,18 @@
 const express = require("express");
 const { Article } = require("../models/Schema");
+const sanitizeHtml = require("../utils/sanitizeHtml");
+const authenticateJWT = require("../middleware/authenticateJWT");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", authenticateJWT, async (req, res) => {
   try {
-    const { code = "", page = 1, limit = 20 } = req.query;
+    let { code = "", page = 1, limit = 20 } = req.query;
 
+    const safeCode = sanitizeHtml(code.trim());
     const query = {
       $or: [
-        { Code: { $regex: code, $options: "i" } },
-        { Description: { $regex: code, $options: "i" } },
+        { Code: { $regex: safeCode, $options: "i" } },
+        { Description: { $regex: safeCode, $options: "i" } },
       ],
     };
 
